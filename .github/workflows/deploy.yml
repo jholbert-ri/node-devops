@@ -58,13 +58,13 @@ jobs:
           aws s3 cp app.zip s3://codedeploy-deployment-bucket-559050209109-sa-east-1/app-$TIMESTAMP.zip
 
       # Paso 4: Trigger CodeDeploy
-      # - name: Trigger CodeDeploy Deployment
-      #   run: |
-      #     DEPLOYMENT_ID=$(aws deploy create-deployment \
-      #       --application-name TuCodeDeployApplication \
-      #       --deployment-group-name TuCodeDeployDeploymentGroup \
-      #       --s3-location bucket=tu-bucket-s3,key=deployments/app-$TIMESTAMP.zip,bundleType=zip \
-      #       --query deploymentId \
-      #       --output text)
+      - name: Trigger CodeDeploy Deployment
+        run: |
+          DEPLOYMENT_ID=$(aws deploy create-deployment \
+            --application-name mi-app-node \
+            --deployment-group-name mi-app-node-deployment-group \
+            --s3-location bucket=tu-bucket-s3,key=deployments/app-$TIMESTAMP.zip,bundleType=zip \
+            --query deploymentId \
+            --output text)
 
-      #     echo "Deployment ID: $DEPLOYMENT_ID"
+          echo "Deployment ID: $DEPLOYMENT_ID"
