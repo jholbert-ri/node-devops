@@ -1,16 +1,17 @@
-const express = require("express");
-const http = require("http"); // Necesario para el servidor HTTP
-const { Server } = require("socket.io"); // Importamos Server de socket.io
-const os = require("os");
+/* eslint-disable no-undef */
+import express from "express";
+import { createServer } from "http";
+import { hostname } from "os";
+import { Server } from "socket.io";
 
 const app = express();
-const server = http.createServer(app); // Creamos el servidor HTTP
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*", // Permite todas las conexiones (solo para desarrollo)
+    origin: "*",
     methods: ["GET", "POST"],
   },
-  transports: ["websocket", "polling"], // Habilita WebSocket explícitamente
+  transports: ["websocket", "polling"],
 });
 
 const PORT = 3001;
@@ -40,7 +41,7 @@ io.on("connection", (socket) => {
 app.get("/status", (req, res) => {
   res.status(200).json({
     status: "ok",
-    instance: os.hostname(), // Muestra el ID de la instancia EC2
+    instance: hostname(),
     timestamp: new Date().toISOString(),
   });
 });
