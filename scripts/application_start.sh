@@ -20,6 +20,6 @@ sudo mkdir -p /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d
 sudo chown -R root:root /opt/aws/amazon-cloudwatch-agent
 
 # Iniciar CloudWatch Agent (verifica la ruta del archivo de configuración)
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.yaml -s
+# sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.yaml -s
 
 echo ">>> [ApplicationStart] END $(date)" >> "$LOG_FILE"
