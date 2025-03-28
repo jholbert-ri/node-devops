@@ -63,7 +63,7 @@ jobs:
           DEPLOYMENT_ID=$(aws deploy create-deployment \
             --application-name mi-app-node \
             --deployment-group-name mi-app-node-deployment-group \
-            --s3-location bucket=tu-bucket-s3,key=deployments/app-$TIMESTAMP.zip,bundleType=zip \
+            --s3-location bucket=codedeploy-deployment-bucket-559050209109-sa-east-1,key=deployments/app-$TIMESTAMP.zip,bundleType=zip \
             --query deploymentId \
             --output text)
 
