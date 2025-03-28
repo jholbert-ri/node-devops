@@ -1,11 +1,10 @@
-/* eslint-disable no-undef */
-import express from "express";
-import { createServer } from "http";
-import { hostname } from "os";
-import { Server } from "socket.io";
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const os = require("os");
 
 const app = express();
-const server = createServer(app);
+const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -41,7 +40,7 @@ io.on("connection", (socket) => {
 app.get("/status", (req, res) => {
   res.status(200).json({
     status: "ok",
-    instance: hostname(),
+    instance: os.hostname(),
     timestamp: new Date().toISOString(),
   });
 });
