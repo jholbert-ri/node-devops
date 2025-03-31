@@ -19,11 +19,9 @@ const PORT = 3001;
 io.on("connection", (socket) => {
   console.log("Nuevo cliente conectado");
 
-  // Escuchar mensajes del cliente
   socket.on("mensaje", (data) => {
     console.log("Mensaje recibido:", data);
 
-    // Reenviar el mensaje a TODOS los clientes
     io.emit("mensaje", {
       from: socket.id,
       message: data,
@@ -36,8 +34,9 @@ io.on("connection", (socket) => {
   });
 });
 
-// Ruta /status
+// Ruta /status (para autoescalado sin WSS)
 app.get("/status", (req, res) => {
+  console.log("Testing Status Route", new Date().toISOString())
   res.status(200).json({
     status: "ok",
     instance: os.hostname(),
@@ -45,7 +44,9 @@ app.get("/status", (req, res) => {
   });
 });
 
+// Ruta /ws-health (para WSS)
 app.get("/ws-health", (req, res) => {
+  console.log("Testing ws-health Route", new Date().toISOString())
   res.status(200).json({
     status: "ok",
     websocket: io.engine.clientsCount > 0 ? "active" : "idle",
@@ -54,22 +55,25 @@ app.get("/ws-health", (req, res) => {
   });
 });
 
+// Ruta /health (para instancia EC2 sin autoscaling)
+app.get("/health", (req, res) => {
+  console.log("Testing health Route", new Date().toISOString())
+  res.status(200).send("OK");
+});
+
 // Manejar cierre limpio
 process.on("SIGINT", () => {
   console.log("\nCerrando servidores...");
 
-  // Cerrar servidor WebSocket
   io.close(() => {
     console.log("Servidor WebSocket cerrado");
 
-    // Cerrar servidor HTTP
     server.close(() => {
       console.log("Servidor HTTP cerrado");
       process.exit(0);
     });
   });
 
-  // Timeout para forzar cierre si algo falla
   setTimeout(() => {
     console.error("Cierre forzado por timeout");
     process.exit(1);

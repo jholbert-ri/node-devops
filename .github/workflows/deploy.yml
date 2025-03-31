@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        
+
       # Paso 2: Build (Skipping tests)
       - name: Build Application
         run: npm run build
@@ -56,7 +56,7 @@ jobs:
       - name: Trigger CodeDeploy Deployment
         run: |
           DEPLOYMENT_ID=$(aws deploy create-deployment \
-            --application-name mi-app-node \
+            --application-name ec2-with-autoscaling \
             --deployment-group-name mi-app-node-deployment-group \
             --s3-location bucket=codedeploy-deployment-bucket-559050209109-sa-east-1,key=deployments/app-$TIMESTAMP.zip,bundleType=zip \
             --query deploymentId \

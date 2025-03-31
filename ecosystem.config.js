@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "mi-app-node",
       script: "./index.js",
-      cwd: "/home/ec2-user/app",
+      cwd: "/home/ubuntu/app",
       error_file: "./logs/app-errors.log",
       out_file: "./logs/app-output.log",
       merge_logs: true,
